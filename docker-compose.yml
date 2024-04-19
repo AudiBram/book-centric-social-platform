@@ -7,8 +7,6 @@ services:
       POSTGRES_PASSWORD: password
       PGDATA: /var/lib/postgresql/data
       POSTGRES_DB: book_social_platform
-    volumes:
-      - postgres: /data/postgres
     ports:
       - 5432:5432
     networks:
@@ -24,7 +22,3 @@ services:
 networks:
   spring-project:
     driver: bridge
-
-volumes:
-  postgres:
-    driver: local
