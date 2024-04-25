@@ -15,13 +15,13 @@ Book Social Network is a full-stack application that enables users to manage the
 
 #### Class diagram
 
-![Class diagram](/book-centric-social-platform\book-centric-api\images\class-diagram.png)
+![Class diagram](book-centric-api\images\class-diagram.png)
 
 #### Spring security diagram
-![Security diagram](/book-centric-social-platform\book-centric-api\images\security.png)
+![Security diagram](book-centric-api\images\security.png)
 
 #### Backend pipeline
-![Security diagram](/book-centric-social-platform\book-centric-api\images\be-pipeline.png)
+![Security diagram](book-centric-api\images\be-pipeline.png)
 
 #### Backend pipeline
-![Security diagram](/book-centric-social-platform\book-centric-api\images\fe-pipeline.png)
+![Security diagram](book-centric-api/images/fe-pipeline.png)
