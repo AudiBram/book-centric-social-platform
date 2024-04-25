@@ -1,4 +1,4 @@
-package org.project.bookcentricapi.feedback;
+package org.project.bookcentricapi.history;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.project.bookcentricapi.book.Book;
 import org.project.bookcentricapi.common.BaseEntity;
+import org.project.bookcentricapi.user.User;
 
 @Getter
 @Setter
@@ -17,13 +18,17 @@ import org.project.bookcentricapi.common.BaseEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Feedback extends BaseEntity {
+public class BookTransactionHistory extends BaseEntity {
 
-    private Double note;
-    private String comment;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
+
+    private boolean returned;
+    private boolean returnApproved;
 
 }

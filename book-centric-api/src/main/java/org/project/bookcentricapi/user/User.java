@@ -2,6 +2,8 @@ package org.project.bookcentricapi.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.project.bookcentricapi.book.Book;
+import org.project.bookcentricapi.history.BookTransactionHistory;
 import org.project.bookcentricapi.role.Role;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -41,6 +43,12 @@ public class User implements UserDetails, Principal {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> histories;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
