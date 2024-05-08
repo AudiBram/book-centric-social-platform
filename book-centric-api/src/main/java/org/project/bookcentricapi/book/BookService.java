@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.project.bookcentricapi.common.PageResponse;
 import org.project.bookcentricapi.exception.OperationNotPermittedException;
+import org.project.bookcentricapi.file.FileStorageService;
 import org.project.bookcentricapi.history.BookTransactionHistory;
 import org.project.bookcentricapi.history.BookTransactionHistoryRepository;
 import org.project.bookcentricapi.user.User;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +27,7 @@ public class BookService {
 
     private final BookMapper bookMapper;
     private final BookRepository bookRepository;
+    private final FileStorageService fileStorageService;
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
 
     public Long save(BookRequest request, Authentication connectedUser) {
@@ -194,5 +197,15 @@ public class BookService {
                 .orElseThrow(() -> new OperationNotPermittedException("The book is not returned yet. You cannot approve its return"));
         bookTransactionHistory.setReturnApproved(true);
         return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
+    }
+
+    // ... Logic for uploading file/pictures
+    public void uploadBookCoverPicture(MultipartFile file, Authentication connectedUser, Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with the ID:: " + bookId));
+        User user = (User) connectedUser.getPrincipal();
+        var bookCover = fileStorageService.saveFile(file, user.getId());
+        book.setBookCover(bookCover);
+        bookRepository.save(book);
     }
 }
